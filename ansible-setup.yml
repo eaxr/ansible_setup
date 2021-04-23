@@ -1,0 +1,9 @@
+- name: Ansible setup
+  gather_facts: false
+  hosts: HOSTNAME
+  become: true
+  become_method: sudo
+  become_user: root
+  roles:
+    - role: galaxy_roles/ansible-setup
+      ansible_user_pubkey: PUBLIC_KEY
