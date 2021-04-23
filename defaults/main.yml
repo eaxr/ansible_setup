@@ -1,0 +1,7 @@
+ansible_user: ansible
+ansible_group: ansible
+
+ansible_adduser_to_wheel_group: false
+ansible_adduser_user_home: /home/ansible
+ansible_adduser_user_name: ansible
+ansible_adduser_user_group: ansible
