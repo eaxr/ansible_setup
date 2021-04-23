@@ -1,0 +1,32 @@
+- name: add user
+  user:
+    name: "{{ ansible_adduser_user_name }}"
+    state: present
+    shell: /bin/bash
+    createhome: yes
+    system: yes
+    home: "{{ ansible_adduser_user_home }}"
+
+
+- name: generate random password
+  command: echo "{{ ansible_adduser_user_name }}:$(tr -dc A-Za-z0-9 </dev/urandom | head -c 13 ; echo '')" | sudo chpasswd
+
+- name: add user to wheel group
+  command: usermod -a -G wheel "{{ ansible_adduser_user_name }}"
+
+- name: Create .ssh dir
+  file:
+    path: "{{ ansible_adduser_user_home }}/.ssh"
+    state: directory
+    owner: "{{ ansible_adduser_user_name }}"
+    mode: 0700
+
+- name: add public key to host
+  copy: src=public.key dest={{ ansible_adduser_user_home }}/.ssh/authorized_keys
+
+- name: update user public key
+  lineinfile:
+    path: "{{ ansible_adduser_user_home }}/.ssh/authorized_keys"
+    state: present
+    regexp: '^BLANK_FILE'
+    line: "{{ ansible_user_pubkey }}"
