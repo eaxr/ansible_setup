@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: foo
+  role_name: ansible-setup
   author: your name
   description: your description
   company: your company (optional)
